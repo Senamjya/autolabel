@@ -1,0 +1,30 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Tooling caches (ruff / ty / pytest)
+.ruff_cache/
+.ty_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Diagnostic images rendered by the test suite
+tests/_diagnostics/
+
+# Mac
+.DS_Store
+
+# Ignore image contents. Keep data/ on clone via its .gitkeep
+data/*
+!.gitkeep
+
+# out/ is created on run
+out/*

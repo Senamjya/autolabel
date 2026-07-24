@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Autolabel: fluorescence particle detection and measurement for filter-paper microplastic images"
+abstract: >-
+  An offline batch tool that detects and measures Nile red fluorescence microplastic
+  particles on filter-paper photographs.
+authors:
+  - given-names: "Senam Julian Yao"
+    family-names: "Asmussen"
+    affiliation: "Norwegian University of Science and Technology (NTNU)"
+    orcid: "https://orcid.org/0009-0001-4885-4801"
+version: 1.0.0
+license: Apache-2.0
+date-released: 2026-07-28
+keywords:
+  - microplastics
+  - image analysis
+  - particle detection
+  - fluorescence
+  - Nile red
+  - environmental monitoring
+  - computer vision
