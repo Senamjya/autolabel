@@ -9,7 +9,7 @@ Python 3.10 or newer and [uv](https://docs.astral.sh/uv/).
 
 ## Installation
 
-Install [uv](https://docs.astral.sh/uv/) by following its
+Install uv by following its
 [installation guide](https://docs.astral.sh/uv/getting-started/installation/).
 
 Get the code with git:
@@ -20,11 +20,11 @@ cd autolabel
 uv sync
 ```
 
-Or download the [v1.0.0 zip](https://github.com/Senamjya/autolabel/archive/refs/tags/v1.0.0.zip),
-unzip it, and run `uv sync` inside:
+Or grab the [latest release](https://github.com/Senamjya/autolabel/releases/latest),
+unzip the source zip, and run `uv sync` inside the unpacked folder:
 
 ```bash
-cd autolabel-1.0.0
+cd autolabel-*/
 uv sync
 ```
 
