@@ -50,6 +50,12 @@ Other types do not trigger a release and are fine to use freely: `docs`, `test`,
 
 Keep the summary in the imperative mood and lower case, with no trailing period.
 
+This repository squash-merges pull requests, so the individual commits on a branch
+never reach `main`. The squashed commit takes its message from the pull request title,
+which means **the PR title is the commit release-please reads**. Make every PR title a
+valid Conventional Commit. The commit messages within a branch still help review, but
+they do not affect versioning.
+
 ## Releases
 
 You do not bump the version by hand. On every push to `main`, release-please keeps a
