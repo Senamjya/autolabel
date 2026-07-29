@@ -31,6 +31,7 @@ from .provenance import (
 from .render import contact_sheet, crop_tile, write_overlay, write_size_histogram
 from .report import (
     print_scale_summary,
+    read_diams_csv,
     scale_summary_lines,
     size_summary_lines,
     write_report,
@@ -220,6 +221,28 @@ def process(args: argparse.Namespace) -> int:
     return 0
 
 
+def replot(out_dir: str) -> int:
+    """Redraw size_hist.png from a finished run's sizes.csv, without re-detecting.
+
+    Returns 0 on success, 1 if the run has no sizes.csv or no sized particles.
+    """
+    root = Path(out_dir)
+    csv_path = root / SIZES_CSV
+    if not csv_path.exists():
+        print(f"No {SIZES_CSV} in {root}", file=sys.stderr)
+        return 1
+    diams_um = read_diams_csv(csv_path)
+    if not diams_um:
+        print(
+            f"No sized particles in {csv_path} (a filter disk is needed for a scale)",
+            file=sys.stderr,
+        )
+        return 1
+    write_size_histogram(diams_um, root / SIZE_HIST)
+    print(f"Wrote {root / SIZE_HIST} from {len(diams_um)} particle(s)")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the command-line argument parser."""
     ap = argparse.ArgumentParser(
@@ -228,7 +251,11 @@ def build_parser() -> argparse.ArgumentParser:
         "fluorescence microplastic particles on filter-paper photographs.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    ap.add_argument("input", help="Folder of fluorescence images (PNG or TIFF)")
+    ap.add_argument(
+        "input",
+        nargs="?",
+        help="Folder of fluorescence images (PNG or TIFF). Not needed with --replot",
+    )
 
     detection = ap.add_argument_group("detection")
     detection.add_argument(
@@ -333,6 +360,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     info = ap.add_argument_group("info and early exit")
     info.add_argument(
+        "--replot",
+        metavar="OUT_DIR",
+        help="Redraw size_hist.png from an existing run's sizes.csv, then exit. Skips "
+        "detection entirely, so it is the quick way to iterate on the chart's look",
+    )
+    info.add_argument(
         "--scale-only",
         action="store_true",
         help="Report px/mm and um/px from the filter disk, then exit without writing "
@@ -349,4 +382,10 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     """Parse arguments and run the pipeline. This is the console-script entry point."""
-    return process(build_parser().parse_args())
+    parser = build_parser()
+    args = parser.parse_args()
+    if args.replot is not None:
+        return replot(args.replot)
+    if args.input is None:
+        parser.error("the input folder is required unless --replot is given")
+    return process(args)
