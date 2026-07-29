@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.0](https://github.com/Senamjya/autolabel/compare/autolabel-v1.0.0...autolabel-v1.1.0) (2026-07-29)
+## [1.1.0](https://github.com/Senamjya/autolabel/compare/v1.0.0...v1.1.0) (2026-07-29)
 
 
 ### Features
