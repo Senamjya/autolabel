@@ -1,6 +1,6 @@
 [project]
 name = "autolabel"
-version = "1.0.0"
+dynamic = ["version"]
 description = "An offline batch tool that detects and measures Nile red fluorescence microplastic particles on filter-paper photographs."
 authors = [{ name = "Senam Julian Yao Asmussen" }]
 license = "Apache-2.0"
@@ -17,6 +17,9 @@ autolabel = "autolabel.cli:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/autolabel/provenance.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/autolabel"]
