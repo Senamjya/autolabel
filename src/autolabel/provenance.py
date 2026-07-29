@@ -11,8 +11,8 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Authoritative version. pyproject.toml mirrors this.
-__version__ = "1.0.0"
+# Authoritative version: pyproject derives it via hatch, release-please bumps it.
+__version__ = "1.0.0"  # x-release-please-version
 
 TOOL_NAME = "autolabel"
 AUTHOR = "Senam Julian Yao Asmussen"

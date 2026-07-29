@@ -22,8 +22,10 @@ def scale_summary_lines(
     # a blob of N px has equivalent diameter 2*sqrt(N/pi) px
     min_diam_um = 2.0 * np.sqrt(min_area / np.pi) * median_um_px
     return [
-        f"Scale   {median_px_mm:.2f} px/mm, {median_um_px:.2f} um/px   "
-        f"(median over {len(px_per_mm)}/{n_images} images, {FILTER_DIAMETER_MM:g} mm disk)",
+        (
+            f"Scale   {median_px_mm:.2f} px/mm, {median_um_px:.2f} um/px   "
+            f"(median over {len(px_per_mm)}/{n_images} images, {FILTER_DIAMETER_MM:g} mm disk)"
+        ),
         f"        min_area {min_area} px ~ {min_diam_um:.0f} um",
     ]
 
@@ -114,6 +116,8 @@ def size_summary_lines(diams_um: list[float], n_sized: int, n_total: int) -> lis
         return ["Sizes: no particle could be sized (no filter disk found for scale)."]
     a = np.array(diams_um)
     return [
-        f"Sizes   median {np.median(a):.0f} um, range {a.min():.0f}-{a.max():.0f} um, "
-        f"mean {a.mean():.0f} um   ({n_sized}/{n_total} sized)",
+        (
+            f"Sizes   median {np.median(a):.0f} um, range {a.min():.0f}-{a.max():.0f} um, "
+            f"mean {a.mean():.0f} um   ({n_sized}/{n_total} sized)"
+        ),
     ]
