@@ -58,6 +58,21 @@ def write_sizes_csv(rows: list[dict], dst: Path) -> None:
         writer.writerows(rows)
 
 
+def read_diams_csv(src: Path) -> list[float]:
+    """Read the equivalent diameters back out of a sizes.csv, skipping blank rows.
+
+    Lets the histogram be regenerated from a finished run without re-detecting.
+    Rows without a scale have a blank equiv_diam_um and are left out, exactly as
+    they were left out of the diameters collected during the original run.
+    """
+    with src.open(newline="") as f:
+        return [
+            float(v)
+            for row in csv.DictReader(f)
+            if (v := row.get("equiv_diam_um", "").strip())
+        ]
+
+
 def write_report(
     dst: Path,
     image_reports: Sequence[tuple[str, float | None, list[dict]]],

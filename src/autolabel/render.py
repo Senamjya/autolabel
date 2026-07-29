@@ -133,9 +133,9 @@ def write_size_histogram(diams_um: list[float], dst: Path) -> None:
     W, H = 900, 520
     L, R, T, B = 74, 30, 58, 66  # plot-area margins
     pw, ph = W - L - R, H - T - B
-    ink, muted = (232, 236, 236), (120, 130, 130)
-    bar, accent = (200, 170, 70), (60, 150, 240)  # teal bars, orange median (BGR)
-    canvas = np.full((H, W, 3), BG, np.uint8)
+    bg, ink, muted = (255, 255, 255), (0, 0, 0), (215, 215, 215)  # white bg, black text
+    bar, accent = (200, 170, 70), (0, 0, 0)  # teal bars, black median line
+    canvas = np.full((H, W, 3), bg, np.uint8)
 
     nbins = int(np.clip(np.ceil(np.sqrt(a.size)) + 2, 6, 24))
     edges = np.logspace(np.log10(lo), np.log10(hi), nbins + 1)
@@ -181,17 +181,13 @@ def write_size_histogram(diams_um: list[float], dst: Path) -> None:
     xm = x_of(med)
     for y in range(T, T + ph, 10):
         cv2.line(canvas, (xm, y), (xm, min(y + 5, T + ph)), accent, 1, cv2.LINE_AA)
-    # dark outline first so the label stays legible when it crosses a bar
-    cv2.putText(
-        canvas, f"median {med:.0f} um", (xm + 6, T + 16), FONT, 0.45, BG, 3, cv2.LINE_AA
-    )
     cv2.putText(
         canvas,
-        f"median {med:.0f} um",
+        f"median {med:.0f} micrometers",
         (xm + 6, T + 16),
         FONT,
         0.45,
-        accent,
+        ink,
         1,
         cv2.LINE_AA,
     )
@@ -207,10 +203,12 @@ def write_size_histogram(diams_um: list[float], dst: Path) -> None:
         1,
         cv2.LINE_AA,
     )
+    xlabel = "particle size in micrometers (logarithmic scale)"
+    (lw, _), _ = cv2.getTextSize(xlabel, FONT, 0.5, 1)
     cv2.putText(
         canvas,
-        "equivalent diameter (um, log scale)",
-        (L + pw // 2 - 130, H - 16),
+        xlabel,
+        (L + (pw - lw) // 2, H - 16),
         FONT,
         0.5,
         ink,

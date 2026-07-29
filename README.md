@@ -74,10 +74,11 @@ the filter disk.
 
 **Info and early exit**
 
-| Flag           | Default | Description                                                                     |
-| -------------- | ------- | ------------------------------------------------------------------------------- |
-| `--scale-only` | off     | Report px/mm and um/px from the filter disk, then exit without writing anything |
-| `--version`    | -       | Print the tool version, author and ORCID, then exit                             |
+| Flag            | Default | Description                                                                              |
+| --------------- | ------- | ---------------------------------------------------------------------------------------- |
+| `--scale-only`  | off     | Report px/mm and um/px from the filter disk, then exit without writing anything          |
+| `--replot DIR`  | -       | Redraw `size_hist.png` from an existing run's `sizes.csv` in DIR, then exit (no detection) |
+| `--version`     | -       | Print the tool version, author and ORCID, then exit                                      |
 
 ## Output
 

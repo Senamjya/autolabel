@@ -4,11 +4,38 @@ import csv
 
 from autolabel.provenance import __version__
 from autolabel.report import (
+    read_diams_csv,
     scale_summary_lines,
     size_summary_lines,
     write_report,
     write_sizes_csv,
 )
+
+
+def test_read_diams_csv_round_trips_written_sizes(tmp_path):
+    """Diameters written to sizes.csv come back out for the histogram to redraw."""
+    dst = tmp_path / "sizes.csv"
+    write_sizes_csv(
+        [
+            {**_size_row(), "equiv_diam_um": "12.5"},
+            {**_size_row(), "equiv_diam_um": "88.0"},
+        ],
+        dst,
+    )
+    assert read_diams_csv(dst) == [12.5, 88.0]
+
+
+def test_read_diams_csv_skips_scaleless_rows(tmp_path):
+    """Rows with a blank equiv_diam_um (no disk, so no scale) are left out."""
+    dst = tmp_path / "sizes.csv"
+    write_sizes_csv(
+        [
+            {**_size_row(), "equiv_diam_um": "12.5"},
+            {**_size_row(), "equiv_diam_um": ""},
+        ],
+        dst,
+    )
+    assert read_diams_csv(dst) == [12.5]
 
 
 def test_scale_summary_lines_report_scale_and_cutoff():
